@@ -1,0 +1,498 @@
+/* =========================================================================
+   Garimpo — tema visual inspirado em cupons fiscais e etiquetas de preço.
+   Tipografia: Space Grotesk (texto e títulos) + IBM Plex Mono (preços/dados).
+   ========================================================================= */
+
+:root {
+  --papel:        #F6F4EC;
+  --papel-forte:  #ECE8DA;
+  --tinta:        #211E18;
+  --tinta-suave:  #6E6959;
+  --linha:        #D7D0BC;
+  --achado:       #1E6B45;   /* verde "economia" */
+  --achado-fundo: #E3F0E7;
+  --carimbo:      #B23A2E;   /* vermelho "carimbo de desconto" */
+  --carimbo-fundo:#F6E4E1;
+  --foco:         #1E4F6B;
+
+  --fonte-ui:   "Space Grotesk", system-ui, sans-serif;
+  --fonte-dado: "IBM Plex Mono", ui-monospace, monospace;
+
+  --raio: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--fonte-ui);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 { font-family: var(--fonte-ui); margin: 0; font-weight: 700; }
+
+button, input, select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------------------------------------------------------------- topo -- */
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 28px;
+  background: var(--papel);
+  border-bottom: 2px dashed var(--linha);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topo__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topo__selo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--tinta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-dado);
+  font-weight: 600;
+  transform: rotate(-8deg);
+  flex-shrink: 0;
+}
+
+.topo__nome {
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+
+.topo__nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav__item {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--raio);
+  color: var(--tinta-suave);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav__item:hover { background: var(--papel-forte); color: var(--tinta); }
+
+.nav__item.is-ativa {
+  background: var(--tinta);
+  color: var(--papel);
+}
+
+.topo__usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.usuario-nome {
+  font-family: var(--fonte-dado);
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+}
+
+/* -------------------------------------------------------------- botões -- */
+
+.botao {
+  font-family: var(--fonte-ui);
+  font-weight: 600;
+  border-radius: var(--raio);
+  cursor: pointer;
+  border: 2px solid var(--tinta);
+  padding: 10px 18px;
+}
+
+.botao--cheio {
+  background: var(--tinta);
+  color: var(--papel);
+}
+.botao--cheio:hover { background: #3a362c; }
+
+.botao--linha {
+  background: transparent;
+  color: var(--tinta);
+}
+.botao--linha:hover { background: var(--papel-forte); }
+
+.botao--pequeno {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.botao--marcado {
+  background: var(--achado);
+  border-color: var(--achado);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------- main/geral -- */
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.secao-cabecalho { margin-bottom: 20px; }
+.secao-subtitulo { color: var(--tinta-suave); margin: 6px 0 0; max-width: 60ch; }
+
+.estado-vazio {
+  color: var(--tinta-suave);
+  border: 2px dashed var(--linha);
+  border-radius: var(--raio);
+  padding: 28px;
+  text-align: center;
+  max-width: 50ch;
+  margin: 24px auto;
+}
+
+.chave-alternancia {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--tinta-suave);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- auth -- */
+
+.auth {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.auth__cartao {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 8px;
+  position: relative;
+}
+
+/* borda picotada de "canhoto de ticket" no topo e na base do cartão */
+.auth__cartao::before,
+.auth__cartao::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 10px;
+  background-image: radial-gradient(circle at 10px 50%, var(--papel) 5px, transparent 5.5px);
+  background-size: 20px 10px;
+  background-repeat: repeat-x;
+}
+.auth__cartao::before { top: -2px; }
+.auth__cartao::after { bottom: -2px; transform: rotate(180deg); }
+
+.auth__abas {
+  display: flex;
+  border-bottom: 2px dashed var(--linha);
+  margin-bottom: 18px;
+}
+
+.auth__aba {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 14px 8px 10px;
+  font-weight: 600;
+  color: var(--tinta-suave);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.auth__aba.is-ativa {
+  color: var(--tinta);
+  border-bottom-color: var(--carimbo);
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 16px 20px;
+}
+
+.auth__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--tinta-suave);
+}
+
+.auth__dica { font-weight: 400; font-size: 0.8rem; }
+
+.auth__form input {
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 10px 12px;
+  color: var(--tinta);
+  background: var(--papel);
+}
+
+.auth__form input:focus-visible { border-color: var(--foco); }
+
+.auth__form button { margin-top: 6px; }
+
+.auth__erro {
+  background: var(--carimbo-fundo);
+  color: var(--carimbo);
+  border-radius: var(--raio);
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------- filtros -- */
+
+.filtros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filtros__busca {
+  flex: 1;
+  min-width: 200px;
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 10px 14px;
+  background: #fff;
+}
+
+.filtros__categoria {
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--tinta);
+}
+
+.filtros__busca:focus-visible,
+.filtros__categoria:focus-visible { border-color: var(--foco); }
+
+/* --------------------------------------------------------------- grade -- */
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+/* ------------------------------------------------------- cartão produto -- */
+
+.cartao-produto {
+  background: #fff;
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.cartao-produto__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cartao-produto__categoria {
+  font-family: var(--fonte-dado);
+  font-size: 0.72rem;
+  color: var(--tinta-suave);
+  text-transform: lowercase;
+}
+
+.cartao-produto__desconto {
+  font-family: var(--fonte-dado);
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--carimbo);
+  border: 2px solid var(--carimbo);
+  border-radius: var(--raio);
+  padding: 2px 7px;
+  transform: rotate(-4deg);
+  white-space: nowrap;
+}
+
+.cartao-produto__nome {
+  font-size: 1.02rem;
+  line-height: 1.3;
+  min-height: 2.6em;
+}
+
+.cartao-produto__precos {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--fonte-dado);
+}
+
+.cartao-produto__preco-original {
+  color: var(--tinta-suave);
+  text-decoration: line-through;
+  font-size: 0.85rem;
+}
+
+.cartao-produto__preco-atual {
+  color: var(--achado);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.cartao-produto__loja {
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+}
+
+.cartao-produto__loja::before {
+  content: "menor preço em ";
+}
+
+.cartao-produto__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px dashed var(--linha);
+}
+
+.cartao-produto__lojas-count {
+  font-size: 0.78rem;
+  color: var(--tinta-suave);
+}
+
+/* --------------------------------------------------------------- recibo -- */
+
+.recibo {
+  background: #fff;
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 20px 24px;
+  max-width: 480px;
+}
+
+.recibo__itens {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recibo__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.recibo__item-info { display: flex; flex-direction: column; gap: 2px; }
+
+.recibo__item-nome { font-weight: 600; font-size: 0.95rem; }
+
+.recibo__item-loja {
+  font-family: var(--fonte-dado);
+  font-size: 0.78rem;
+  color: var(--tinta-suave);
+}
+
+.recibo__item-precos {
+  font-family: var(--fonte-dado);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.recibo__item-preco-atual { color: var(--achado); font-weight: 600; }
+.recibo__item-preco-original {
+  display: block;
+  text-decoration: line-through;
+  color: var(--tinta-suave);
+  font-size: 0.78rem;
+}
+
+.recibo__item-remover {
+  background: none;
+  border: none;
+  color: var(--carimbo);
+  font-family: var(--fonte-dado);
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.recibo__linha-pontilhada {
+  border-top: 2px dashed var(--linha);
+  margin: 18px 0 14px;
+}
+
+.recibo__total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-family: var(--fonte-dado);
+  font-size: 1.1rem;
+}
+
+#recibo-total-valor { color: var(--achado); }
+
+/* --------------------------------------------------------------- utilit -- */
+
+[hidden] { display: none !important; }
+
+@media (max-width: 560px) {
+  .topo { flex-wrap: wrap; gap: 12px; padding: 12px 16px; }
+  .topo__nav { order: 3; width: 100%; justify-content: space-between; }
+  main { padding: 24px 16px 48px; }
+}

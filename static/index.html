@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garimpo — rastreador de ofertas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo__marca">
+    <span class="topo__selo">G</span>
+    <span class="topo__nome">Garimpo</span>
+  </div>
+  <nav class="topo__nav" id="nav-app" hidden>
+    <button class="nav__item" data-view="catalogo">Catálogo</button>
+    <button class="nav__item" data-view="lista">Minha lista</button>
+    <button class="nav__item" data-view="melhores">Melhores ofertas</button>
+  </nav>
+  <div class="topo__usuario">
+    <span id="usuario-nome" class="usuario-nome" hidden></span>
+    <button id="btn-sair" class="botao botao--linha" hidden>Sair</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- TELA DE AUTENTICAÇÃO -->
+  <section id="view-auth" class="auth">
+    <div class="auth__cartao">
+      <div class="auth__abas">
+        <button class="auth__aba is-ativa" data-aba="login">Entrar</button>
+        <button class="auth__aba" data-aba="registro">Criar conta</button>
+      </div>
+
+      <form id="form-login" class="auth__form">
+        <p class="auth__erro" id="erro-login" hidden></p>
+        <label>E-mail
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Senha
+          <input type="password" name="senha" required autocomplete="current-password">
+        </label>
+        <button type="submit" class="botao botao--cheio">Entrar</button>
+      </form>
+
+      <form id="form-registro" class="auth__form" hidden>
+        <p class="auth__erro" id="erro-registro" hidden></p>
+        <label>Nome
+          <input type="text" name="nome" required autocomplete="name">
+        </label>
+        <label>E-mail
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Senha <span class="auth__dica">(mínimo 4 caracteres)</span>
+          <input type="password" name="senha" required autocomplete="new-password" minlength="4">
+        </label>
+        <button type="submit" class="botao botao--cheio">Criar conta</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="view-catalogo" class="view" hidden>
+    <div class="filtros">
+      <input type="search" id="campo-busca" placeholder="Buscar produto…" class="filtros__busca">
+      <select id="campo-categoria" class="filtros__categoria">
+        <option value="">Todas as categorias</option>
+      </select>
+    </div>
+    <div id="grade-catalogo" class="grade"></div>
+  </section>
+
+  <!-- MINHA LISTA -->
+  <section id="view-lista" class="view" hidden>
+    <div class="secao-cabecalho">
+      <h1>Minha lista de interesse</h1>
+      <p class="secao-subtitulo">Produtos que você está de olho — acompanhe o menor preço entre as lojas.</p>
+    </div>
+    <p id="lista-vazia" class="estado-vazio" hidden>
+      Sua lista está vazia. Vá até o catálogo e clique em "Acompanhar preço" nos produtos que te interessam.
+    </p>
+    <div id="recibo-lista" class="recibo" hidden>
+      <div id="recibo-itens" class="recibo__itens"></div>
+      <div class="recibo__linha-pontilhada"></div>
+      <div class="recibo__total">
+        <span>Economia total encontrada</span>
+        <span id="recibo-total-valor">R$ 0,00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MELHORES OFERTAS -->
+  <section id="view-melhores" class="view" hidden>
+    <div class="secao-cabecalho">
+      <h1>Melhores ofertas do momento</h1>
+      <p class="secao-subtitulo">Os maiores descontos encontrados no catálogo.</p>
+    </div>
+    <label class="chave-alternancia">
+      <input type="checkbox" id="filtro-apenas-lista">
+      Mostrar só os itens da minha lista
+    </label>
+    <div id="grade-melhores" class="grade"></div>
+  </section>
+
+</main>
+
+<!-- modelo de cartão de produto (clonado via JS) -->
+<template id="modelo-cartao">
+  <article class="cartao-produto">
+    <div class="cartao-produto__topo">
+      <span class="cartao-produto__categoria"></span>
+      <span class="cartao-produto__desconto"></span>
+    </div>
+    <h3 class="cartao-produto__nome"></h3>
+    <div class="cartao-produto__precos">
+      <span class="cartao-produto__preco-original"></span>
+      <span class="cartao-produto__preco-atual"></span>
+    </div>
+    <div class="cartao-produto__loja"></div>
+    <div class="cartao-produto__rodape">
+      <span class="cartao-produto__lojas-count"></span>
+      <button class="botao botao--pequeno cartao-produto__acao"></button>
+    </div>
+  </article>
+</template>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>
